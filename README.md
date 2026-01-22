@@ -37,3 +37,25 @@ python my_process.py
     2. Monitor: The terminal will display live status updates.
     3. Authenticate: If a warning threshold is met during the session, you will be prompted to enter your Gmail App Password at the end to send the alert.
 
+- Cross-Platform Support: Works on Linux, macOS, and Windows (with WSL or Git Bash).
+- Real-time Monitoring: Prints system status to the terminal every second.
+- Intelligent Alerting: Combines multiple resource warnings (e.g., "CPU and RAM are full") into a single notification.
+- Configurable Duration: Choose exactly how long you want to monitor the system.
+## Prerequisties
+
+- Python 3.x: Ensure Python is installed on your machine.
+- Dependencies: Install the required schedule library:
+```Bash
+pip install schedule
+```
+
+- Gmail App Password: For security, Gmail requires an App Password rather than your regular login password.
+- Go to your Google Account Settings.
+- Enable 2-Step Verification.
+- Search for App Passwords and generate one for "Mail."Run the script from your terminal:
+```
+python my_process.py
+```
+- Input Duration: The script will ask: For how much time you want to run the process. Enter the time in seconds (e.g., 60).
+- Monitor: The terminal will display live status updates.
+- Authenticate: If a warning threshold is met during the session, you will be prompted to enter your Gmail App Password at the end to send the alert.
