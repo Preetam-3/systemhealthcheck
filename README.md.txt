@@ -1,7 +1,4 @@
-# systemhealthcheck
-Check the health of the system and sends an alert when system goes down.
-
- System Health Monitor & Alerter
+﻿System Health Monitor & Alerter
 A lightweight Python script that monitors CPU, RAM, and Disk usage for a user-defined duration. If system resources exceed health thresholds (70% for Warning, 90% for Critical), it automatically sends a detailed alert email.
 Features
     • Cross-Platform Support: Works on Linux, macOS, and Windows (with WSL or Git Bash).
