@@ -4,8 +4,8 @@ import schedule
 from email.message import EmailMessage
 import time
 
-timer = int(input(f"For how much time you want to run the process "))
-
+print("This process will run for 15 sec")
+timer = 15
 
 counts = {
     'cpu': 0, 
@@ -16,6 +16,7 @@ counts = {
     'cpuramdisk': 0
 }
 alert_message = ""
+THRESHOLD = 4
 
 def usagechecker():
     global alert_message
@@ -48,22 +49,26 @@ def usagechecker():
         code += 'cpu'
     if health(ram) != "Ok": 
         code += 'ram'
-    elif health(disk) != "Ok": 
+    if health(disk) != "Ok": 
         code += 'disk'
-   
 
-    if code in counts:
+    for k in counts:
+        if k != code:
+            counts[k] = 0
+    if code:
         counts[code] += 1
-        if counts[code] == timer:
-            messagge = {
-                 'cpu': 'Your Cpu is getting full',
-                'ram': 'Your Ram is getting full',
-                'disk': 'Your Disk is getting full',
-                'cpuram': 'Your Ram and Cpu are getting full',
-                'ramdisk': 'Your Ram and Disk are getting full',
-                'cpuramdisk': 'Your Cpu, Ram and Disk are getting full'
+
+        if counts[code] == THRESHOLD:
+            message = {               
+                'cpu': 'Your CPU usage is high',
+                'ram': 'Your RAM usage is high',
+                'disk': 'Your Disk usage is high',
+                'cpuram': 'Your CPU and RAM usage are high',
+                'ramdisk': 'Your RAM and Disk usage are high',
+                'cpuramdisk': 'Your CPU, RAM and Disk usage are high'
+
             }
-            alert_message = messagge.get(code)
+            alert_message = message.get(code)
 
 schedule.every(1).seconds.do(usagechecker)
 
@@ -75,17 +80,20 @@ while time.time() < end:
 if alert_message != '': 
     msg = EmailMessage()
     msg.set_content(alert_message)
-    msg["Subject"] = "Sytem Alert: System Warning"
+    toemail = input("Enter receipeint email: ")
+    msg["Subject"] = "System Alert: System Warning"
     msg["From"] = "preetambadatya16@gmail.com"
-    msg["to"] = "shulong16@proton.me"
-    print("Enter your Gmail app password: ")
-    pssd = input()
+    msg["to"] = toemail 
+
+    pssd = input("Enter you Gmail App password: ")
+    
     try:
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
             smtp.login('preetambadatya16@gmail.com', pssd)
+            smtp.send_message(msg)
 
             print("Email sent succesfully")
     except Exception as e:
         print(f"Error: {e}")
 else:
-    print("All system are normal.No email")
+    print("All system are normal.No email sent")
